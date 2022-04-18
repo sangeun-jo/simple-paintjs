@@ -47,12 +47,28 @@ function saveSign() {
   link.click();
 }
 
+function startTouchPainting(event) {
+  ctx.beginPath(); 
+}
+
+function onTouchMove(event) {
+  const touches = event.changedTouches;
+  const x = touches[0].pageX;
+  const y = touches[0].pageY;; 
+  ctx.lineTo(x, y); 
+  ctx.stroke();
+}
+
+
 /*이벤트 리스너 */
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
-  canvas.addEventListener("mouseleave", stopPainting)
+
+  /*모바일 버전 이벤트*/
+  canvas.addEventListener("touchmove", onTouchMove, false);
+  canvas.addEventListener("touchstart", startTouchPainting, false);
 }
 
 if (clear) {
